@@ -12,22 +12,10 @@ const UserData = require('./UserData.json');
 
 const app = express();
 
-const PeopleType = new GraphQLObjectType({
-  name: 'People',
-  description: 'This is a person apart of the organization',
-  fields: () => ({
-    id: { type: GraphQLNonNull(GraphQLString) },
-    firstName: { type: GraphQLNonNull(GraphQLString) },
-    lastName: { type: GraphQLNonNull(GraphQLString) },
-    jobTitle: { type: GraphQLNonNull(GraphQLString) },
-    departmentId: { type: GraphQLNonNull(GraphQLString) },
-    managerId: { type: GraphQLString },
-  }),
-});
-
 const DepartmentType = new GraphQLObjectType({
   name: 'Department',
-  description: 'This is a department of the organization.',
+  description:
+    'This is a department of the organization with the option to query its employees.',
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLString) },
     name: { type: GraphQLNonNull(GraphQLString) },
@@ -52,6 +40,35 @@ const EmployeeType = new GraphQLObjectType({
     jobTitle: { type: GraphQLNonNull(GraphQLString) },
     departmentId: { type: GraphQLNonNull(GraphQLString) },
     managerId: { type: GraphQLString },
+    subordinates: {
+      type: new GraphQLList(DepartmentType),
+      resolve: (employee) => {
+        switch (employee.departmentId) {
+          case '2b9edccb-41fc-4fc5-b832-ac86a034a877':
+            return UserData.departments.filter(
+              (department) => department.name === 'Executive'
+            );
+            break;
+          case 'aef293ee-8dcc-4d89-99cf-1b8f61bab07b':
+            return UserData.departments.filter(
+              (department) => department.name === 'HR'
+            );
+            break;
+          case '2b9edccb-41fc-4fc5-b832-ac86a034a877':
+            return UserData.departments.filter(
+              (department) =>
+                department.name === 'Engineering' ||
+                department.name === 'Marketing' ||
+                department.name === 'Operations' ||
+                department.name === 'Sales'
+            );
+            break;
+          default:
+            return null;
+            break;
+        }
+      },
+    },
   }),
 });
 
@@ -60,13 +77,13 @@ const RootQueryType = new GraphQLObjectType({
   description: 'Root Organization',
   fields: () => ({
     ceo: {
-      type: PeopleType,
+      type: EmployeeType,
       description: 'This is the CEO of the organization.',
       resolve: () => UserData.people.find((user) => user.jobTitle === 'CEO'),
     },
     departments: {
       type: new GraphQLList(DepartmentType),
-      description: 'List of all departments within the organization.',
+      description: 'This list all the departments within the organization.',
       args: {
         id: { type: GraphQLString },
         name: { type: GraphQLString },
