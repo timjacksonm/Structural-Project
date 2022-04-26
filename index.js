@@ -41,31 +41,51 @@ const EmployeeType = new GraphQLObjectType({
     departmentId: { type: GraphQLNonNull(GraphQLString) },
     managerId: { type: GraphQLString },
     subordinates: {
-      type: new GraphQLList(DepartmentType),
+      type: new GraphQLList(EmployeeType),
+      description: 'This list of employees report this worker',
       resolve: (employee) => {
         switch (employee.departmentId) {
-          case '2b9edccb-41fc-4fc5-b832-ac86a034a877':
-            return UserData.departments.filter(
-              (department) => department.name === 'Executive'
+          case 'aef293ee-8dcc-4d89-99cf-1b8f61bab07b' /*Executive*/:
+            return UserData.people.filter(
+              (user) =>
+                user.departmentId === '2b9edccb-41fc-4fc5-b832-ac86a034a877' &&
+                user.id != employee.id
             );
-            break;
-          case 'aef293ee-8dcc-4d89-99cf-1b8f61bab07b':
-            return UserData.departments.filter(
-              (department) => department.name === 'HR'
+          case '2b9edccb-41fc-4fc5-b832-ac86a034a877' /*Management*/:
+            return UserData.people.filter(
+              (user) =>
+                user.departmentId === 'e573dd1c-4cd4-451d-a844-a25210e91135' &&
+                user.id != employee.id
             );
-            break;
-          case '2b9edccb-41fc-4fc5-b832-ac86a034a877':
-            return UserData.departments.filter(
-              (department) =>
-                department.name === 'Engineering' ||
-                department.name === 'Marketing' ||
-                department.name === 'Operations' ||
-                department.name === 'Sales'
+          case 'ddd31c01-a30d-4e72-8e8b-d710fcc4fb56' /*Human Resources*/:
+            return UserData.people.filter(
+              (user) =>
+                user.departmentId === 'e573dd1c-4cd4-451d-a844-a25210e91135' &&
+                user.id != employee.id
             );
-            break;
+          case 'e573dd1c-4cd4-451d-a844-a25210e91135' /*Operations*/:
+            return {
+              engineering: UserData.people.filter(
+                (user) =>
+                  user.departmentId ===
+                    '920a774e-617a-4a5b-82ea-8205c18eef75' &&
+                  user.id != employee.id
+              ),
+              marketing: UserData.people.filter(
+                (user) =>
+                  user.departmentId ===
+                    '252fc1e8-aead-45cc-9d7d-e6003897bbf9' &&
+                  user.id != employee.id
+              ),
+              sales: UserData.people.filter(
+                (user) =>
+                  user.departmentId ===
+                    'cfd90465-28fa-4b9a-be3e-ef2517e987e9' &&
+                  user.id != employee.id
+              ),
+            };
           default:
             return null;
-            break;
         }
       },
     },
@@ -80,6 +100,31 @@ const RootQueryType = new GraphQLObjectType({
       type: EmployeeType,
       description: 'This is the CEO of the organization.',
       resolve: () => UserData.people.find((user) => user.jobTitle === 'CEO'),
+    },
+    employee: {
+      type: new GraphQLList(EmployeeType),
+      description: 'This is an employee of the organization.',
+      args: {
+        id: { type: GraphQLString },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+      },
+      resolve: (parent, args) => {
+        if (args?.id) {
+          return UserData.people.filter((user) => user.id === args.id);
+        }
+        if (args?.firstName) {
+          return UserData.people.filter(
+            (user) => user.firstName === args.firstName
+          );
+        }
+        if (args?.lastName) {
+          return UserData.people.filter(
+            (user) => user.lastName === args.lastName
+          );
+        }
+        return UserData.departments;
+      },
     },
     departments: {
       type: new GraphQLList(DepartmentType),
