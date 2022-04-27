@@ -5,7 +5,6 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLList,
-  GraphQLInt,
   GraphQLNonNull,
 } = require('graphql');
 const UserData = require('./UserData.json');
@@ -134,6 +133,11 @@ const RootQueryType = new GraphQLObjectType({
         }
         return UserData.departments;
       },
+    },
+    employees: {
+      type: new GraphQLList(EmployeeType),
+      description: 'This list all the employees within the organization',
+      resolve: () => UserData.people,
     },
     departments: {
       type: new GraphQLList(DepartmentType),
