@@ -40,6 +40,15 @@ const EmployeeType = new GraphQLObjectType({
     jobTitle: { type: GraphQLNonNull(GraphQLString) },
     departmentId: { type: GraphQLNonNull(GraphQLString) },
     managerId: { type: GraphQLString },
+    departmentName: {
+      type: GraphQLNonNull(GraphQLString),
+      resolve: (employee) => {
+        const department = UserData.departments.find(
+          (department) => department.id === employee.departmentId
+        );
+        return department.name;
+      },
+    },
     subordinates: {
       type: new GraphQLList(EmployeeType),
       description: 'This list of employees report this worker',
@@ -54,7 +63,7 @@ const EmployeeType = new GraphQLObjectType({
           case '2b9edccb-41fc-4fc5-b832-ac86a034a877' /*Management*/:
             return UserData.people.filter(
               (user) =>
-                user.departmentId === 'e573dd1c-4cd4-451d-a844-a25210e91135' &&
+                user.departmentId === 'ddd31c01-a30d-4e72-8e8b-d710fcc4fb56' &&
                 user.id != employee.id
             );
           case 'ddd31c01-a30d-4e72-8e8b-d710fcc4fb56' /*Human Resources*/:
