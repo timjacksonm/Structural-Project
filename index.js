@@ -72,26 +72,26 @@ const EmployeeType = new GraphQLObjectType({
                 user.id != employee.id
             );
           case 'e573dd1c-4cd4-451d-a844-a25210e91135' /*Operations*/:
-            return {
-              engineering: UserData.people.filter(
+            return [
+              ...UserData.people.filter(
                 (user) =>
                   user.departmentId ===
                     '920a774e-617a-4a5b-82ea-8205c18eef75' &&
                   user.id != employee.id
               ),
-              marketing: UserData.people.filter(
+              ...UserData.people.filter(
                 (user) =>
                   user.departmentId ===
                     '252fc1e8-aead-45cc-9d7d-e6003897bbf9' &&
                   user.id != employee.id
               ),
-              sales: UserData.people.filter(
+              ...UserData.people.filter(
                 (user) =>
                   user.departmentId ===
                     'cfd90465-28fa-4b9a-be3e-ef2517e987e9' &&
                   user.id != employee.id
               ),
-            };
+            ];
           default:
             return null;
         }
