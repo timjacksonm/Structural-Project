@@ -8,7 +8,7 @@ describe('Company API Queries', () => {
   test('Query a list of all employees by firstName', async () => {
     const response = await axios.post('http://localhost:4000/', {
       query: `
-      query Query {
+      query {
         employees {
           firstName
         }
@@ -28,11 +28,11 @@ describe('Company API Queries', () => {
     });
   });
 
-  test('Query the ceo by job title returning fist and last name', async () => {
+  test('Query the ceo by job title', async () => {
     const response = await axios.post('http://localhost:4000/', {
       query: `
-      query Query {
-        employees {
+      query {
+        employees(jobTitle: "CEO") {
           id
           firstName
           lastName
@@ -63,11 +63,31 @@ describe('Company API Queries', () => {
 
   test('Query an employee by id', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query {
+        employee(id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef") {
+          id
+          firstName
+          lastName
+          jobTitle
+          departmentId
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        employee: {
+          id: '2798c35b-5b8f-4a5d-9858-0a818d48cbef',
+          firstName: 'Orval',
+          lastName: 'Hauck',
+          jobTitle: 'CEO',
+          departmentId: '2b9edccb-41fc-4fc5-b832-ac86a034a877',
+        },
+      },
+    });
   });
 
   test('Query an employee by id that is not found', async () => {
