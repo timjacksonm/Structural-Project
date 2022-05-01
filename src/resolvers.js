@@ -20,5 +20,20 @@ exports.resolvers = {
         return employee;
       }
     },
+    departments: (parent, args, context) => {
+      return UserData.departments;
+    },
+    department: (parent, args, context) => {
+      if (args?.id) {
+        return UserData.departments.find(
+          (department) => department.id === args.id
+        );
+      }
+      if (args?.name) {
+        return UserData.departments.find(
+          (department) => department.name === args.name
+        );
+      }
+    },
   },
 };

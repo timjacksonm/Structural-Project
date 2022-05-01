@@ -92,29 +92,50 @@ describe('Company API Queries', () => {
 
   test('Query an employee by id that is not found', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query {
+        employee(id: "not-found") {
+          id
+          firstName
+          lastName
+          jobTitle
+          departmentId
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        employee: null,
+      },
+    });
   });
 
   test('Query a list of all departments by name', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query {
+        departments {
+          id
+          name
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
-  });
-
-  test('Query a list of employees that are below a user in the hierarchy', async () => {
-    const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+    expect(data).toMatchObject({
+      data: {
+        departments: expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+            name: expect.any(String),
+          }),
+        ]),
+      },
     });
-
-    const { data } = response;
-    expect(data).toMatchObject();
   });
 
   test('Query a list of all employees wtesthin a department', async () => {
@@ -125,6 +146,15 @@ describe('Company API Queries', () => {
     const { data } = response;
     expect(data).toMatchObject();
   });
+});
+
+test('Query a list of employees that are below a user in the hierarchy', async () => {
+  const response = await axios.post('http://localhost:4000/', {
+    query: ``,
+  });
+
+  const { data } = response;
+  expect(data).toMatchObject();
 });
 
 describe('Company API Mutations', () => {

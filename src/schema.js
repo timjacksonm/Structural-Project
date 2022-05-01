@@ -4,13 +4,20 @@ exports.typeDefs = gql`
   type Query {
     employees(jobTitle: String): [Employee!]!
     employee(id: ID!): Employee
+    departments: [Department!]!
+    department(id: ID, name: String): Department
   }
 
   type Employee {
-    id: String!
+    id: ID!
     firstName: String
     lastName: String
     jobTitle: String
     departmentId: String
+  }
+
+  type Department {
+    id: ID!
+    name: String!
   }
 `;
