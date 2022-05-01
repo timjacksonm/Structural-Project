@@ -138,13 +138,37 @@ describe('Company API Queries', () => {
     });
   });
 
-  test('Query a list of all employees wtesthin a department', async () => {
+  test('Query a list of all employees within a department', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query {
+        department(name: "Sales") {
+          id
+          name
+          employees {
+            firstName
+            jobTitle
+          }
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        department: expect.objectContaining({
+          id: 'cfd90465-28fa-4b9a-be3e-ef2517e987e9',
+          name: 'Sales',
+          employees: expect.arrayContaining([
+            expect.objectContaining({
+              firstName: expect.any(String),
+              jobTitle: expect.any(String),
+            }),
+          ]),
+        }),
+      },
+    });
   });
 });
 

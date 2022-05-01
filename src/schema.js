@@ -19,5 +19,6 @@ exports.typeDefs = gql`
   type Department {
     id: ID!
     name: String!
+    employees: [Employee!]!
   }
 `;

@@ -36,4 +36,12 @@ exports.resolvers = {
       }
     },
   },
+  Department: {
+    employees: (parent, args, context) => {
+      const department = parent.id;
+      return UserData.people.filter(
+        (person) => person.departmentId === department
+      );
+    },
+  },
 };
