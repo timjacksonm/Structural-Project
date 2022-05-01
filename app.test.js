@@ -5,13 +5,27 @@ const { XMLHttpRequest } = require('xmlhttprequest');
 global.XMLHttpRequest = XMLHttpRequest;
 
 describe('Company API Queries', () => {
-  test('Query a list of all employees', async () => {
+  test('Query a list of all employees by firstName', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query Query {
+        employees {
+          firstName
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        employees: expect.arrayContaining([
+          expect.objectContaining({
+            firstName: expect.any(String),
+          }),
+        ]),
+      },
+    });
   });
 
   test('Query the ceo by job ttestle returning fist and last name', async () => {});

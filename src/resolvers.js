@@ -2,6 +2,6 @@ const UserData = require('../UserData.json');
 
 exports.resolvers = {
   Query: {
-    hello: () => 'Hello',
+    employees: () => UserData.people,
   },
 };
