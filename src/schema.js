@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 exports.typeDefs = gql`
   type Query {
-    employees: [Employee!]!
+    employees(jobTitle: String): [Employee!]!
   }
 
   type Employee {
