@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devstart": "nodemon index.js"
+    "test": "jest --watchAll",
+    "test-server": "npm run devstart & npm run test",
+    "devstart": "nodemon app.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,9 @@
     "graphql": "^15.8.0"
   },
   "devDependencies": {
+    "axios": "^0.27.2",
     "jest": "^28.0.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "xmlhttprequest": "^1.8.0"
   }
 }
