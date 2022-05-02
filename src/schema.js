@@ -20,6 +20,9 @@ exports.typeDefs = gql`
   type Department {
     id: ID!
     name: String!
+    hierarchy: Int!
     employees: [Employee!]!
+    precededDepartment: Department
+    subordinateDepartment: Department
   }
 `;

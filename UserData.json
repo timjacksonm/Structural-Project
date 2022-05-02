@@ -1,12 +1,40 @@
 {
   "departments": [
-    { "name": "Engineering", "id": "920a774e-617a-4a5b-82ea-8205c18eef75" },
-    { "name": "Sales", "id": "cfd90465-28fa-4b9a-be3e-ef2517e987e9" },
-    { "name": "Marketing", "id": "252fc1e8-aead-45cc-9d7d-e6003897bbf9" },
-    { "name": "Operations", "id": "e573dd1c-4cd4-451d-a844-a25210e91135" },
-    { "name": "Management", "id": "2b9edccb-41fc-4fc5-b832-ac86a034a877" },
-    { "name": "Executive", "id": "aef293ee-8dcc-4d89-99cf-1b8f61bab07b" },
-    { "name": "HR", "id": "ddd31c01-a30d-4e72-8e8b-d710fcc4fb56" }
+    {
+      "name": "Engineering",
+      "id": "920a774e-617a-4a5b-82ea-8205c18eef75",
+      "hierarchy": 5
+    },
+    {
+      "name": "Sales",
+      "id": "cfd90465-28fa-4b9a-be3e-ef2517e987e9",
+      "hierarchy": 7
+    },
+    {
+      "name": "Marketing",
+      "id": "252fc1e8-aead-45cc-9d7d-e6003897bbf9",
+      "hierarchy": 6
+    },
+    {
+      "name": "Operations",
+      "id": "e573dd1c-4cd4-451d-a844-a25210e91135",
+      "hierarchy": 3
+    },
+    {
+      "name": "Management",
+      "id": "2b9edccb-41fc-4fc5-b832-ac86a034a877",
+      "hierarchy": 2
+    },
+    {
+      "name": "Executive",
+      "id": "aef293ee-8dcc-4d89-99cf-1b8f61bab07b",
+      "hierarchy": 1
+    },
+    {
+      "name": "HR",
+      "id": "ddd31c01-a30d-4e72-8e8b-d710fcc4fb56",
+      "hierarchy": 4
+    }
   ],
   "people": [
     {

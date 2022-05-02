@@ -12,13 +12,7 @@ exports.resolvers = {
       }
     },
     employee: (parent, args, context) => {
-      if (args?.id) {
-        const employee = UserData.people.find(
-          (person) => person.id === args.id
-        );
-        if (!employee) return null;
-        return employee;
-      }
+      return UserData.people.find((person) => person.id === args.id);
     },
     departments: (parent, args, context) => {
       return UserData.departments;
@@ -50,5 +44,11 @@ exports.resolvers = {
         (person) => person.departmentId === department
       );
     },
+    precededDepartment: (parent, args, context) => {
+      return UserData.departments.find(
+        (department) => department.hierarchy === parent.hierarchy - 1
+      );
+    },
+    subordinateDepartment: (parent, args, context) => {},
   },
 };
