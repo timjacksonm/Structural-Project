@@ -49,6 +49,10 @@ exports.resolvers = {
         (department) => department.hierarchy === parent.hierarchy - 1
       );
     },
-    subordinateDepartment: (parent, args, context) => {},
+    subordinateDepartment: (parent, args, context) => {
+      return UserData.departments.find(
+        (department) => department.hierarchy === parent.hierarchy + 1
+      );
+    },
   },
 };

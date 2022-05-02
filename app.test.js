@@ -154,6 +154,47 @@ describe('Company API Queries', () => {
     });
   });
 
+  test('Query a list of employees that are below a user in the hierarchy', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: `
+      query {
+        employee(id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef") {
+          firstName
+          lastName
+          department {
+            subordinateDepartment {
+              name
+              employees {
+                firstName
+              }
+            }
+          }
+        }
+      }
+      `,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        employee: {
+          firstName: 'Orval',
+          lastName: 'Hauck',
+          department: {
+            subordinateDepartment: {
+              name: expect.stringContaining('Operations'),
+              employees: expect.arrayContaining([
+                expect.objectContaining({
+                  firstName: expect.any(String),
+                }),
+              ]),
+            },
+          },
+        },
+      },
+    });
+  });
+
   test('Query an employee by id that is not found', async () => {
     const response = await axios.post('http://localhost:4000/', {
       query: `
@@ -235,13 +276,118 @@ describe('Company API Queries', () => {
     });
   });
 
-  test('Query a list of employees that are below a user in the hierarchy', async () => {
+  test('Query each subordinate department starting from the Executive department', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      query {
+        department(name: "Executive") {
+          name
+          subordinateDepartment {
+            name
+            subordinateDepartment {
+              name
+              subordinateDepartment {
+                name
+                subordinateDepartment {
+                  name
+                  subordinateDepartment {
+                    name
+                    subordinateDepartment {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        department: {
+          name: 'Executive',
+          subordinateDepartment: {
+            name: 'Management',
+            subordinateDepartment: {
+              name: 'Operations',
+              subordinateDepartment: {
+                name: 'HR',
+                subordinateDepartment: {
+                  name: 'Engineering',
+                  subordinateDepartment: {
+                    name: 'Marketing',
+                    subordinateDepartment: {
+                      name: 'Sales',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+  });
+
+  test('Query each preceding department starting from the Sales department', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: `
+      query {
+        department(name: "Sales") {
+          name
+          precededDepartment {
+            name
+            precededDepartment {
+              name
+              precededDepartment {
+                name
+                precededDepartment {
+                  name
+                  precededDepartment {
+                    name
+                    precededDepartment {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      `,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        department: {
+          name: 'Sales',
+          precededDepartment: {
+            name: 'Marketing',
+            precededDepartment: {
+              name: 'Engineering',
+              precededDepartment: {
+                name: 'HR',
+                precededDepartment: {
+                  name: 'Operations',
+                  precededDepartment: {
+                    name: 'Management',
+                    precededDepartment: {
+                      name: 'Executive',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
   });
 });
 
