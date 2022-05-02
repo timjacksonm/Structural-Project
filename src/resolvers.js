@@ -30,6 +30,18 @@ exports.resolvers = {
       }
     },
   },
+  Mutation: {
+    updateEmployee: (parent, args, context) => {
+      const index = UserData.people.findIndex(
+        (person) => person.id === args.id
+      );
+      UserData.people[index] = {
+        ...UserData.people[index],
+        ...args.input,
+      };
+      return UserData.people[index];
+    },
+  },
   Employee: {
     department: (parent, args, context) => {
       return UserData.departments.find(

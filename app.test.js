@@ -394,46 +394,101 @@ describe('Company API Queries', () => {
 describe('Company API Mutations', () => {
   test('Update an employees first name to Bob', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      mutation {
+        updateEmployee(
+          id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef"
+          input: { firstName: "Bob" }
+        ) {
+          id
+          firstName
+          lastName
+          jobTitle
+          departmentId
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        updateEmployee: {
+          id: '2798c35b-5b8f-4a5d-9858-0a818d48cbef',
+          firstName: 'Bob',
+          lastName: 'Hauck',
+          jobTitle: 'CEO',
+          departmentId: '2b9edccb-41fc-4fc5-b832-ac86a034a877',
+        },
+      },
+    });
   });
 
-  test('Update an employees first name to a Number', async () => {
+  test('Update all of an employees information', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      mutation {
+        updateEmployee(
+          id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef"
+          input: {
+            firstName: "Jane"
+            lastName: "Doe"
+            jobTitle: "Stay At Home Parent"
+            departmentId: "cfd90465-28fa-4b9a-be3e-ef2517e987e9"
+          }
+        ) {
+          id
+          firstName
+          lastName
+          jobTitle
+          departmentId
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
+    expect(data).toMatchObject({
+      data: {
+        updateEmployee: {
+          id: '2798c35b-5b8f-4a5d-9858-0a818d48cbef',
+          firstName: 'Jane',
+          lastName: 'Doe',
+          jobTitle: 'Stay At Home Parent',
+          departmentId: 'cfd90465-28fa-4b9a-be3e-ef2517e987e9',
+        },
+      },
+    });
   });
 
-  test('Update an employees department he works in', async () => {
+  test('Delete an employees information', async () => {
     const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+      query: `
+      mutation {
+        deleteEmployee(
+          id: "d44390cd-b306-4e11-b7d5-a5e0e6fe1e3d"
+        ) {
+          id
+          firstName
+          lastName
+          jobTitle
+          departmentId
+        }
+      }
+      `,
     });
 
     const { data } = response;
-    expect(data).toMatchObject();
-  });
-
-  test('Update an employees job ttestle', async () => {
-    const response = await axios.post('http://localhost:4000/', {
-      query: ``,
+    expect(data).toMatchObject({
+      data: {
+        employee: {
+          id: 'd44390cd-b306-4e11-b7d5-a5e0e6fe1e3d',
+          firstName: 'Asia',
+          lastName: 'Streich',
+          jobTitle: 'Dynamic Branding Orchestrator',
+          departmentId: 'aef293ee-8dcc-4d89-99cf-1b8f61bab07b',
+        },
+      },
     });
-
-    const { data } = response;
-    expect(data).toMatchObject();
-  });
-
-  test('Delete an employees record', async () => {
-    const response = await axios.post('http://localhost:4000/', {
-      query: ``,
-    });
-
-    const { data } = response;
-    expect(data).toMatchObject();
   });
 });

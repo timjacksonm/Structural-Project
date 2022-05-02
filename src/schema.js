@@ -8,6 +8,10 @@ exports.typeDefs = gql`
     department(id: ID, name: String): Department
   }
 
+  type Mutation {
+    updateEmployee(id: ID!, input: UpdateEmployeeInput): Employee!
+  }
+
   type Employee {
     id: ID!
     firstName: String
@@ -24,5 +28,12 @@ exports.typeDefs = gql`
     employees: [Employee!]!
     precededDepartment: Department
     subordinateDepartment: Department
+  }
+
+  input UpdateEmployeeInput {
+    firstName: String
+    lastName: String
+    jobTitle: String
+    departmentId: String
   }
 `;
