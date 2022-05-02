@@ -14,6 +14,7 @@ exports.typeDefs = gql`
     lastName: String
     jobTitle: String
     departmentId: String
+    department: Department!
   }
 
   type Department {

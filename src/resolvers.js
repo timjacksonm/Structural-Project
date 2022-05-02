@@ -36,6 +36,13 @@ exports.resolvers = {
       }
     },
   },
+  Employee: {
+    department: (parent, args, context) => {
+      return UserData.departments.find(
+        (department) => department.id === parent.departmentId
+      );
+    },
+  },
   Department: {
     employees: (parent, args, context) => {
       const department = parent.id;

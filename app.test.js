@@ -90,6 +90,70 @@ describe('Company API Queries', () => {
     });
   });
 
+  test('Query an employee by id and find out the department name they work in', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: `
+      query {
+        employee(id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef") {
+          firstName
+          lastName
+          department {
+            name
+          }
+        }
+      }
+      `,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        employee: {
+          firstName: 'Orval',
+          lastName: 'Hauck',
+          department: {
+            name: 'Management',
+          },
+        },
+      },
+    });
+  });
+
+  test('Query an employee by id and get a list of all associates first names within their department', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: `
+      query {
+        employee(id: "2798c35b-5b8f-4a5d-9858-0a818d48cbef") {
+          firstName
+          lastName
+          department {
+            employees {
+              firstName
+            }
+          }
+        }
+      }
+      `,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        employee: {
+          firstName: 'Orval',
+          lastName: 'Hauck',
+          department: {
+            employees: expect.arrayContaining([
+              expect.objectContaining({
+                firstName: expect.any(String),
+              }),
+            ]),
+          },
+        },
+      },
+    });
+  });
+
   test('Query an employee by id that is not found', async () => {
     const response = await axios.post('http://localhost:4000/', {
       query: `
@@ -170,15 +234,15 @@ describe('Company API Queries', () => {
       },
     });
   });
-});
 
-test('Query a list of employees that are below a user in the hierarchy', async () => {
-  const response = await axios.post('http://localhost:4000/', {
-    query: ``,
+  test('Query a list of employees that are below a user in the hierarchy', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: ``,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject();
   });
-
-  const { data } = response;
-  expect(data).toMatchObject();
 });
 
 describe('Company API Mutations', () => {
