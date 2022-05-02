@@ -63,11 +63,11 @@ npm test
 
 #### What I learned
 
-<p>Writing each resolver is where I really started to understand the importance of types and how Apollo would produce an error if the value wasn't of the same type. Creating relationships with the data made me realize what I could be doing in the future at Structural if offered a position. I learned that one of the main benefits of graphql was eliminating sending the client data they don't need with more defined queries. It also was less code than I am used to for a typical rest API using express and Nodejs.</p>
+<p>Writing each resolver is where I really started to understand the importance of types and how Apollo would produce an error if the value wasn't of the same type. Creating relationships with the data made me realize what I could be doing in the future at Structural if offered a position. I learned that one of the main benefits of graphql was eliminating sending the client data they don't need with more defined queries. It also was less code than I am used to for a typical rest API using Express and Nodejs.</p>
 
 #### Retrospec
 
-<p>I realize that I still only scratched the surface. You can run typescript and nexus and have a graphql file generated automatically. There is intellisense support in Vscode that I would like to use in the future. It is used by pretty much any language. You can have subscriptions to connect messenger chats or maybe a counter that auto updates. You can setup variables to dynamically add data to arguments in a query or mutation. There is a lot and I am intrigued to learn more. I also plan to get into Typescript very soon but felt it may have been too much to tackle with a query language I have not used before.</p>
+<p>I realize that I still only scratched the surface. You can run typescript and nexus and have a graphql file generated automatically. There is intellisense support in Vscode that I would like to use in the future. It can be used in pretty much any language. You can have subscriptions to connect messenger chats or maybe a counter that auto update. You can setup variables to dynamically add data to arguments in a query or mutation. I also plan to get into Typescript very soon but felt it may have been too much to tackle with a query language I have not used before. I am sure there is more to learn and I am intrugued to dive deeper.</p>
 
 ## Improvements
 
