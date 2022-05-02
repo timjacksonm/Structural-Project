@@ -10,6 +10,7 @@ exports.typeDefs = gql`
 
   type Mutation {
     updateEmployee(id: ID!, input: UpdateEmployeeInput): Employee!
+    deleteEmployee(id: ID!): Boolean!
   }
 
   type Employee {

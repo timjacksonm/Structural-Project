@@ -467,13 +467,7 @@ describe('Company API Mutations', () => {
       mutation {
         deleteEmployee(
           id: "d44390cd-b306-4e11-b7d5-a5e0e6fe1e3d"
-        ) {
-          id
-          firstName
-          lastName
-          jobTitle
-          departmentId
-        }
+        )
       }
       `,
     });
@@ -481,13 +475,26 @@ describe('Company API Mutations', () => {
     const { data } = response;
     expect(data).toMatchObject({
       data: {
-        employee: {
-          id: 'd44390cd-b306-4e11-b7d5-a5e0e6fe1e3d',
-          firstName: 'Asia',
-          lastName: 'Streich',
-          jobTitle: 'Dynamic Branding Orchestrator',
-          departmentId: 'aef293ee-8dcc-4d89-99cf-1b8f61bab07b',
-        },
+        deleteEmployee: true,
+      },
+    });
+  });
+
+  test('Delete an employees information that doesn/t exist', async () => {
+    const response = await axios.post('http://localhost:4000/', {
+      query: `
+      mutation {
+        deleteEmployee(
+          id: "does-not-exist"
+        )
+      }
+      `,
+    });
+
+    const { data } = response;
+    expect(data).toMatchObject({
+      data: {
+        deleteEmployee: false,
       },
     });
   });

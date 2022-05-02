@@ -41,6 +41,12 @@ exports.resolvers = {
       };
       return UserData.people[index];
     },
+    deleteEmployee: (parent, args, context) => {
+      const index = UserData.people.find((person) => person.id === args.id);
+      if (!index) return false;
+      UserData.people.splice(index, 1);
+      return true;
+    },
   },
   Employee: {
     department: (parent, args, context) => {
