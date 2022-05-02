@@ -67,7 +67,7 @@ npm test
 
 #### Retrospec
 
-<p>I realize that I still only scratched the surface. You can run typescript and nexus and have a graphql file generated automatically. There is intellisense support in vscode that I would like to use in the future. It is used by pretty much any language. You can have subscriptions to connect messenger chats or maybe a counter that auto updates. You can setup variables to dynamically add data to arguments in a query or mutation. There is a lot and I am intrigued to learn more.</p>
+<p>I realize that I still only scratched the surface. You can run typescript and nexus and have a graphql file generated automatically. There is intellisense support in vscode that I would like to use in the future. It is used by pretty much any language. You can have subscriptions to connect messenger chats or maybe a counter that auto updates. You can setup variables to dynamically add data to arguments in a query or mutation. There is a lot and I am intrigued to learn more. I also plan to get into Typescript very soon but felt it may have been to much to tackle with a query langauge I have not used before.</p>
 
 ## Improvements
 
