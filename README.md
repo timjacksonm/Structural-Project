@@ -71,10 +71,10 @@ npm test
 
 ## Improvements
 
-<p>Create a front end</p>
-<p>Implement a database</p>
-<p>Add a full name query</p>
-<p>Add department employee counter query || orginazation counter query</p>
+<p> - Create a front end</p>
+<p> - Implement a database</p>
+<p> - Add a full name query</p>
+<p> - Add department employee counter query || orginazation counter query</p>
 
 #### Big Picture
 
